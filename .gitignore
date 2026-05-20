@@ -27,7 +27,8 @@ models/*.joblib
 models/*.pkl
 
 # Private/local-only (rule C30)
-.claude/settings.local.json
+.claude/
+CLAUDE.md
 learning_log.md
 carry.md
 MANUAL_TASKS.md
