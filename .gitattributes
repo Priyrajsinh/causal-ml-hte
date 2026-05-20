@@ -6,6 +6,8 @@ models/*.joblib       linguist-generated=true filter=lfs diff=lfs merge=lfs -tex
 models/*.json         linguist-generated=true
 notebooks/*.ipynb     linguist-language=Python
 
+requirements-lock.txt linguist-generated=true
+
 # Normalise line endings
 * text=auto eol=lf
 *.ps1 text eol=crlf

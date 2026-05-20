@@ -38,5 +38,4 @@ explain.md
 reports/drift/*.html
 hf_space/*.joblib
 
-# Lockfile (working file, not committed)
-requirements-lock.txt
+# Lockfile is committed (linguist-generated=true in .gitattributes)
