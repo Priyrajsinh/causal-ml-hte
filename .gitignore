@@ -1,0 +1,41 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.coverage
+*.egg-info/
+dist/
+build/
+
+# Env + secrets
+.env
+
+# MLflow
+mlruns/
+mlflow.db
+
+# Raw data (DVC-tracked, not in git — rule C41)
+data/raw/lalonde_nsw.csv
+data/raw/lalonde_cps.csv
+data/raw/*.dta
+data/processed/*.csv
+
+# Model artefacts (joblib too large for git; HF Space copies separately)
+models/*.joblib
+models/*.pkl
+
+# Private/local-only (rule C30)
+.claude/settings.local.json
+learning_log.md
+carry.md
+MANUAL_TASKS.md
+explain.md
+
+# Generated reports HTML
+reports/drift/*.html
+hf_space/*.joblib
+
+# Lockfile (working file, not committed)
+requirements-lock.txt
