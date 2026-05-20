@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "causal-ml-hte"
+version = "0.1.0"
+description = "Causal ML · Heterogeneous Treatment Effect Estimation (LaLonde NSW + CPS)"
+authors = [{name = "Priyrajsinh Parmar", email = "priyrajsinh03@gmail.com"}]
+requires-python = ">=3.12"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.12"
+strict_optional = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["econml.*", "sklearn.*", "lightgbm.*", "shap.*", "mlflow.*", "mapie.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+filterwarnings = ["error::DeprecationWarning"]
+asyncio_mode = "auto"
+
+[tool.interrogate]
+fail-under = 80
+verbose = 1
+
+[tool.coverage.run]
+source = ["src"]
