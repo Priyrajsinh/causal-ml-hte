@@ -1,0 +1,75 @@
+seed: 42
+
+data:
+  nsw_url: "https://users.nber.org/~rdehejia/data/nsw_dw.dta"
+  cps_url: "https://users.nber.org/~rdehejia/data/cps_controls.dta"
+  nsw_raw: "data/raw/lalonde_nsw.csv"
+  cps_raw: "data/raw/lalonde_cps.csv"
+  nsw_processed: "data/processed/nsw_clean.csv"
+  cps_processed: "data/processed/cps_clean.csv"
+  checksum_suffix: ".sha256"
+
+ground_truth:
+  rcl_ate: 1794.0
+  rcl_ci_low: 550.0
+  rcl_ci_high: 3038.0
+  tolerance: 600.0
+
+dml:
+  cv: 5
+  model_y:
+    boosting_type: "gbdt"
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.05
+    min_child_samples: 5
+    verbose: -1
+  model_t:
+    boosting_type: "gbdt"
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.05
+    min_child_samples: 5
+    verbose: -1
+
+causal_forest:
+  n_estimators: 200
+  min_samples_leaf: 10
+  max_depth: 10
+  cv: 5
+  inference: "bootstrap"
+  n_bootstrap_samples: 500
+
+monitoring:
+  cate_drift_window_size: 500
+  cate_psi_threshold: 0.2
+
+api:
+  rate_limit_cate: "30/minute"
+  max_payload_mb: 1
+  cors_origins:
+    - "http://localhost:8501"
+    - "http://localhost:7860"
+  trusted_hosts:
+    - "localhost"
+    - "127.0.0.1"
+    - "*.hf.space"
+
+policy:
+  top_fraction: 0.30
+
+ui:
+  glassmorphism: true
+  stream_pipeline: true
+  primary_color: "#6366f1"
+  secondary_color: "#a855f7"
+
+mlflow:
+  experiment_name: "p3_causal_ml_hte"
+  tracking_uri: "file:./mlruns"
+
+paths:
+  models_dir: "models/"
+  reports_dir: "reports/"
+  figures_dir: "reports/figures/"
+  results_json: "reports/results.json"
