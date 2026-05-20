@@ -230,6 +230,7 @@ tomlkit==0.14.0
 tqdm==4.67.3
 typeguard==4.5.2
 typer==0.25.1
+types-PyYAML==6.0.12.20260518
 typing-inspect==0.9.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
