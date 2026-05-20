@@ -34,6 +34,8 @@ asyncio_mode = "auto"
 [tool.interrogate]
 fail-under = 80
 verbose = 1
+ignore-init-module = true
+ignore-magic = true
 
 [tool.coverage.run]
 source = ["src"]
