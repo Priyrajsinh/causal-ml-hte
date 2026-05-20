@@ -1,0 +1,5 @@
+outs:
+- md5: e8feae2c0ffbde114c416f83755d9fbe
+  size: 972467
+  hash: md5
+  path: lalonde_cps.csv

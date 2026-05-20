@@ -1,0 +1,5 @@
+outs:
+- md5: 2a43a6b64ae3c76b1f6db39cff81b2f5
+  size: 31281
+  hash: md5
+  path: lalonde_nsw.csv
