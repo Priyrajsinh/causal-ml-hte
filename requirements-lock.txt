@@ -226,7 +226,7 @@ threadpoolctl==3.6.0
 toml==0.10.2
 tomli==2.4.1
 tomli_w==1.2.0
-tomlkit==0.14.0
+tomlkit==0.15.0
 tqdm==4.67.3
 typeguard==4.5.2
 typer==0.25.1
