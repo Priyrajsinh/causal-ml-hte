@@ -24,7 +24,7 @@ ignore_missing_imports = true
 warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
-module = ["econml.*", "sklearn.*", "lightgbm.*", "shap.*", "mlflow.*", "mapie.*"]
+module = ["econml.*", "sklearn.*", "lightgbm.*", "shap.*", "mlflow.*", "mapie.*", "statsmodels.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

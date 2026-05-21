@@ -6,7 +6,7 @@ from pandera.pandas import Check, Column, DataFrameSchema
 LALONDE_SCHEMA = DataFrameSchema(
     {
         "treat": Column(int, Check(lambda s: s.isin([0, 1]))),
-        "age": Column(int, Check(lambda s: s.between(17, 55))),
+        "age": Column(int, Check(lambda s: s.between(16, 55))),
         "education": Column(int, Check(lambda s: s.between(0, 18))),
         "black": Column(int, Check(lambda s: s.isin([0, 1]))),
         "hispanic": Column(int, Check(lambda s: s.isin([0, 1]))),
