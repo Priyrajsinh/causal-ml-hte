@@ -85,14 +85,10 @@ class TestPanderaRejection:
     def test_pandera_rejects_bad_treat_value(self, tmp_path: Path) -> None:
         """treat=2 must fail pandera validation via load_nsw."""
         bad_csv = tmp_path / "bad.csv"
-        bad_csv.write_text(
-            textwrap.dedent(
-                """\
+        bad_csv.write_text(textwrap.dedent("""\
                 treat,age,education,black,hispanic,married,nodegree,re74,re75,re78
                 2,25,10,1,0,0,1,0.0,0.0,5000.0
-            """
-            )
-        )
+            """))
         sidecar = tmp_path / "bad.csv.sha256"
         sidecar.write_text(hashlib.sha256(bad_csv.read_bytes()).hexdigest())
         with pytest.raises(Exception):
