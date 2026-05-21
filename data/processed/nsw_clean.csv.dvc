@@ -1,0 +1,5 @@
+outs:
+- md5: e459a941e5d51bf6c8403c624a576ab3
+  size: 15698
+  hash: md5
+  path: nsw_clean.csv
