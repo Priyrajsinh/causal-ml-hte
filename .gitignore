@@ -21,6 +21,7 @@ data/raw/lalonde_nsw.csv
 data/raw/lalonde_cps.csv
 data/raw/*.dta
 data/processed/*.csv
+data/processed/*.sha256
 
 # Model artefacts (joblib too large for git; HF Space copies separately)
 models/*.joblib
