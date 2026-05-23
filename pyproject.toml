@@ -30,6 +30,10 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 filterwarnings = ["error::DeprecationWarning"]
 asyncio_mode = "auto"
+markers = [
+    "slow: long-running tests (real DVC data, full DML fit) — opt-in",
+]
+addopts = "-m 'not slow'"
 
 [tool.interrogate]
 fail-under = 80

@@ -32,8 +32,10 @@ gradio:
 streamlit:
 	$(PY) -m streamlit run app.py
 
-# Known unfixable CVEs (PYSEC-2024-274/271/277) — see MANUAL_TASKS.md
-PIP_AUDIT_IGNORE := --ignore-vuln PYSEC-2024-274 --ignore-vuln PYSEC-2024-271 --ignore-vuln PYSEC-2024-277
+# Known unfixable CVEs — see MANUAL_TASKS.md
+# PYSEC-2024-{274,271,277}: gradio / flask-cors / joblib — no fix versions
+# PYSEC-2026-161: starlette<1; fix is 1.0.1 but breaks mlflow-skinny + prometheus-fastapi-instrumentator
+PIP_AUDIT_IGNORE := --ignore-vuln PYSEC-2024-274 --ignore-vuln PYSEC-2024-271 --ignore-vuln PYSEC-2024-277 --ignore-vuln PYSEC-2026-161
 
 audit:
 	$(PY) -m pip_audit -r requirements.txt $(PIP_AUDIT_IGNORE)
