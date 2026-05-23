@@ -165,6 +165,23 @@ def test_ate_table_three_way_keys(tmp_path: Path) -> None:
         assert key in table, f"missing ate_table key: {key}"
 
 
+def test_ate_table_figure_written(tmp_path: Path) -> None:
+    """ate_three_way_table.png lands under reports/figures/ after a train run."""
+    nsw = _synthetic_lalonde(n=80, seed=7)
+    obs = _synthetic_lalonde(n=120, seed=8)
+    nsw_csv = tmp_path / "nsw.csv"
+    obs_csv = tmp_path / "nsw_treated_plus_cps_controls.csv"
+    nsw.to_csv(nsw_csv, index=False)
+    obs.to_csv(obs_csv, index=False)
+    rcl_truth = {"ate": 1500.0, "ci_lower": 500.0, "ci_upper": 2500.0, "se": 500.0}
+
+    cfg = _write_config(tmp_path, nsw_csv, obs_csv, rcl_truth, tolerance=5000.0)
+    main(str(cfg))
+
+    figure = tmp_path / "reports" / "figures" / "ate_three_way_table.png"
+    assert figure.exists()
+
+
 @pytest.mark.slow
 def test_dml_nsw_recovers_rcl_ground_truth() -> None:
     """Rule C37 headline test on real DVC-tracked NSW data.
