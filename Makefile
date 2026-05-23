@@ -18,7 +18,7 @@ test:
 	$(PY) -m pytest tests/ -v --tb=short --cov=src --cov-fail-under=70
 
 train:
-	$(PY) -m src.training.train --config config/config.yaml
+	$(PY) -m src.training.train_dml --config config/config.yaml
 
 evaluate:
 	$(PY) -m src.evaluation.evaluate --config config/config.yaml
