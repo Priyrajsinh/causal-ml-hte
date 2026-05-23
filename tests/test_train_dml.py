@@ -146,6 +146,26 @@ def test_train_dml_smoke(tmp_path: Path) -> None:
     assert (tmp_path / "models" / "dml_cps" / "linear_dml.joblib").exists()
 
 
+def test_calibration_metadata_written(tmp_path: Path) -> None:
+    """calibration_metadata.json declares estimator=LinearDML for Day 8 anti-leakage."""
+    nsw = _synthetic_lalonde(n=80, seed=3)
+    obs = _synthetic_lalonde(n=120, seed=4)
+    nsw_csv = tmp_path / "nsw.csv"
+    obs_csv = tmp_path / "nsw_treated_plus_cps_controls.csv"
+    nsw.to_csv(nsw_csv, index=False)
+    obs.to_csv(obs_csv, index=False)
+    rcl_truth = {"ate": 1500.0, "ci_lower": 500.0, "ci_upper": 2500.0, "se": 500.0}
+
+    cfg = _write_config(tmp_path, nsw_csv, obs_csv, rcl_truth, tolerance=5000.0)
+    main(str(cfg))
+
+    meta = json.loads((tmp_path / "models" / "calibration_metadata.json").read_text())
+    assert meta["estimator"] == "LinearDML"
+    assert meta["cv"] == 2
+    assert meta["model_y"] == "LGBMRegressor"
+    assert meta["model_t"] == "LGBMClassifier"
+
+
 def test_ate_table_three_way_keys(tmp_path: Path) -> None:
     """results.json['ate_table'] exposes the headline three-way comparison keys."""
     nsw = _synthetic_lalonde(n=80, seed=5)

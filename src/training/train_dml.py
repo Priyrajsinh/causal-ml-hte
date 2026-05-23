@@ -63,6 +63,18 @@ def main(config_path: str) -> None:
         models_dir / "training_stats.json",
     )
 
+    meta = {
+        "fitted_on": "nsw_clean.csv",
+        "cv": cfg["dml"]["cv"],
+        "estimator": "LinearDML",
+        "model_y": "LGBMRegressor",
+        "model_t": "LGBMClassifier",
+        "n_samples_nsw": int(len(nsw)),
+        "n_samples_obs": int(len(obs)),
+        "seed": cfg["seed"],
+    }
+    (models_dir / "calibration_metadata.json").write_text(json.dumps(meta, indent=2))
+
     results_path = Path(cfg["paths"]["results_json"])
     existing = json.loads(results_path.read_text()) if results_path.exists() else {}
     existing["ate_table"] = {
