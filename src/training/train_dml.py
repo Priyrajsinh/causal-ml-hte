@@ -13,6 +13,7 @@ import mlflow
 import numpy as np
 import pandas as pd
 
+from src.baseline.ate_table import plot_three_way_table
 from src.config import load_config
 from src.data.skew_check import save_training_stats
 from src.logger import get_logger
@@ -91,6 +92,11 @@ def main(config_path: str) -> None:
         mlflow.log_metric("dml_cps_ate", ate_obs["ate"])
         mlflow.log_metric("dml_cps_ci_lower", ate_obs["ci_lower"])
         mlflow.log_metric("dml_cps_ci_upper", ate_obs["ci_upper"])
+
+    plot_three_way_table(
+        results_path,
+        Path(cfg["paths"]["figures_dir"]) / "ate_three_way_table.png",
+    )
 
     truth = float(existing["rcl_ground_truth"]["ate"])
     tol = float(cfg["ground_truth"]["tolerance"])
