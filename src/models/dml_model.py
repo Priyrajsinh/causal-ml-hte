@@ -115,6 +115,28 @@ class CausalDMLEstimator(BaseMLModel):
         lo, hi = self.estimator.effect_interval(X, alpha=alpha)
         return np.asarray(lo).reshape(-1), np.asarray(hi).reshape(-1)
 
+    def safe_predict(self, X: np.ndarray) -> np.ndarray:
+        """Rule C36 — NaN / inf / shape guards before delegating to predict."""
+        if not self._fitted:
+            raise PredictionError("Model not fitted.")
+        X = np.asarray(X)
+        if X.ndim != 2:
+            raise PredictionError(f"Expected 2-D X, got shape {X.shape}.")
+        if X.shape[1] != len(COVARIATES):
+            raise PredictionError(
+                f"Expected {len(COVARIATES)} covariates, got {X.shape[1]}."
+            )
+        if np.isnan(X).any() or np.isinf(X).any():
+            raise PredictionError("Input contains NaN or inf.")
+        logger.info(
+            "safe_predict: n=%d cols=%d range=[%.2f,%.2f]",
+            X.shape[0],
+            X.shape[1],
+            float(X.min()),
+            float(X.max()),
+        )
+        return self.predict(X)
+
     def save(self, dir_: Path) -> None:
         """Persist the fitted estimator + meta to dir_ via joblib."""
         dir_ = Path(dir_)

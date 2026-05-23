@@ -54,6 +54,42 @@ def test_predict_before_fit_raises() -> None:
         est.predict(np.zeros((1, len(COVARIATES))))
 
 
+def test_safe_predict_nan_raises(dummy_lalonde_df: pd.DataFrame) -> None:
+    """NaN inputs to safe_predict must raise PredictionError (rule C36)."""
+    Y, T, X = _arrays(dummy_lalonde_df)
+    est = _fast_est(cv=2).fit(Y=Y, T=T, X=X)
+    bad = X.astype(float).copy()
+    bad[0, 0] = np.nan
+    with pytest.raises(PredictionError, match="NaN"):
+        est.safe_predict(bad)
+
+
+def test_safe_predict_inf_raises(dummy_lalonde_df: pd.DataFrame) -> None:
+    """Inf inputs to safe_predict must raise PredictionError (rule C36)."""
+    Y, T, X = _arrays(dummy_lalonde_df)
+    est = _fast_est(cv=2).fit(Y=Y, T=T, X=X)
+    bad = X.astype(float).copy()
+    bad[0, 0] = np.inf
+    with pytest.raises(PredictionError):
+        est.safe_predict(bad)
+
+
+def test_safe_predict_wrong_n_features_raises(dummy_lalonde_df: pd.DataFrame) -> None:
+    """7-column input (off by one) must raise PredictionError (rule C36)."""
+    Y, T, X = _arrays(dummy_lalonde_df)
+    est = _fast_est(cv=2).fit(Y=Y, T=T, X=X)
+    with pytest.raises(PredictionError, match="covariates"):
+        est.safe_predict(X[:, :-1])
+
+
+def test_safe_predict_wrong_ndim_raises(dummy_lalonde_df: pd.DataFrame) -> None:
+    """1-D input must raise PredictionError (shape guard, rule C36)."""
+    Y, T, X = _arrays(dummy_lalonde_df)
+    est = _fast_est(cv=2).fit(Y=Y, T=T, X=X)
+    with pytest.raises(PredictionError, match="2-D"):
+        est.safe_predict(X[0])
+
+
 def test_save_load_roundtrip(dummy_lalonde_df: pd.DataFrame, tmp_path: Path) -> None:
     """save → load round-trip must produce identical CATE predictions."""
     Y, T, X = _arrays(dummy_lalonde_df)
