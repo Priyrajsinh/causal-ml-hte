@@ -62,12 +62,12 @@ def _write_config(
             },
         },
         "causal_forest": {
-            "n_estimators": 50,
-            "min_samples_leaf": 5,
-            "max_depth": 5,
+            "n_estimators": 20,
+            "min_samples_leaf": 2,
+            "max_depth": 3,
             "cv": 2,
             "inference": "bootstrap",
-            "n_bootstrap_samples": 50,
+            "n_bootstrap_samples": 5,
         },
         "monitoring": {"cate_drift_window_size": 100, "cate_psi_threshold": 0.2},
         "api": {
