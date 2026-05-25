@@ -1,0 +1,10 @@
+{
+  "fitted_on": "nsw_clean.csv",
+  "cv": 5,
+  "estimator": "LinearDML",
+  "model_y": "LGBMRegressor",
+  "model_t": "LGBMClassifier",
+  "n_samples_nsw": 445,
+  "n_samples_obs": 16177,
+  "seed": 42
+}
