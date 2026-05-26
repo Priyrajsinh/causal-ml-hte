@@ -1,4 +1,4 @@
-.PHONY: install lint test train evaluate serve gradio streamlit audit ci docker-build
+.PHONY: install lint test train evaluate heterogeneity serve gradio streamlit audit ci docker-build
 
 PY := venv/Scripts/python
 PIP := venv/Scripts/pip
@@ -23,6 +23,9 @@ train:
 evaluate:
 	$(PY) -m src.evaluation.evaluate --config config/config.yaml
 
+heterogeneity:
+	$(PY) -m src.heterogeneity --config config/config.yaml
+
 serve:
 	$(PY) -m uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
 
@@ -35,7 +38,8 @@ streamlit:
 # Known unfixable CVEs — see MANUAL_TASKS.md
 # PYSEC-2024-{274,271,277}: gradio / flask-cors / joblib — no fix versions
 # PYSEC-2026-161: starlette<1; fix is 1.0.1 but breaks mlflow-skinny + prometheus-fastapi-instrumentator
-PIP_AUDIT_IGNORE := --ignore-vuln PYSEC-2024-274 --ignore-vuln PYSEC-2024-271 --ignore-vuln PYSEC-2024-277 --ignore-vuln PYSEC-2026-161
+# MAL-2026-4750: fastapi 0.136.3 undocumented 'fastar' dep in [standard] extra; pinned to <0.136.3 in requirements.txt
+PIP_AUDIT_IGNORE := --ignore-vuln PYSEC-2024-274 --ignore-vuln PYSEC-2024-271 --ignore-vuln PYSEC-2024-277 --ignore-vuln PYSEC-2026-161 --ignore-vuln MAL-2026-4750
 
 audit:
 	$(PY) -m pip_audit -r requirements.txt $(PIP_AUDIT_IGNORE)
