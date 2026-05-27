@@ -137,7 +137,7 @@ opentelemetry-semantic-conventions==0.63b0
 orjson==3.11.9
 packageurl-python==0.17.6
 packaging==26.2
-pandas==2.3.3
+pandas==3.0.3
 pandera==0.31.1
 pathspec==1.1.1
 patsy==1.0.2
