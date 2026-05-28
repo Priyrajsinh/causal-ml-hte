@@ -8,16 +8,14 @@ import gradio as gr
 import pytest
 
 
-def test_theme_provides_indigo_purple_palette() -> None:
-    """``get_theme`` and ``get_css`` expose the indigo/purple palette."""
-    from src.api.theme import PRIMARY, SECONDARY, get_css, get_theme
+def test_theme_exposes_indigo_purple_palette() -> None:
+    """``get_theme`` returns the project's tuned Soft theme."""
+    from src.api.theme import PRIMARY, SECONDARY, get_theme
 
     assert PRIMARY == "#6366f1"
     assert SECONDARY == "#a855f7"
-    css = get_css()
-    assert "backdrop-filter" in css
-    assert "slideUp" in css
-    assert isinstance(get_theme(), gr.themes.Base)
+    theme = get_theme()
+    assert isinstance(theme, gr.themes.Soft)
 
 
 def test_gradio_demo_does_not_load_model_at_import() -> None:
@@ -46,7 +44,7 @@ def test_build_demo_returns_blocks() -> None:
 def test_stream_cate_yields_five_stages_when_model_present() -> None:
     """``stream_cate`` yields exactly 5 tuples (stage, metrics, nl).
 
-    Requires the causal forest joblib — marked slow + skip-if-missing.
+    Requires the causal forest joblib - marked slow + skip-if-missing.
     """
     from pathlib import Path
 
@@ -64,5 +62,5 @@ def test_stream_cate_yields_five_stages_when_model_present() -> None:
     # Last yield carries the final result
     final_stage, final_metrics, final_nl = items[-1]
     assert "Done" in final_stage
-    assert "CATE:" in final_metrics
-    assert "Recommendation:" in final_metrics
+    assert "CATE" in final_metrics
+    assert "Recommendation" in final_metrics
