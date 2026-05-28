@@ -1,4 +1,4 @@
-.PHONY: install lint test train evaluate heterogeneity serve gradio streamlit audit ci docker-build
+.PHONY: install lint test train evaluate heterogeneity explain serve gradio streamlit audit ci docker-build
 
 PY := venv/Scripts/python
 PIP := venv/Scripts/pip
@@ -25,6 +25,9 @@ evaluate:
 
 heterogeneity:
 	$(PY) -m src.heterogeneity --config config/config.yaml
+
+explain:
+	$(PY) -m src.evaluation --config config/config.yaml
 
 serve:
 	$(PY) -m uvicorn src.api.app:app --host 0.0.0.0 --port 8000 --reload
