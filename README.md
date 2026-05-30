@@ -5,7 +5,7 @@
 > This project shows exactly why, and who benefits most.
 
 [![Live CATE Predictor](https://img.shields.io/badge/🤗%20Gradio-Live%20Demo-orange)](https://huggingface.co/spaces/Priyrajsinh/causal-ml-hte-cate-explorer)
-[![Streamlit Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-red)](https://priyrajsinh-causal-ml-hte.streamlit.app)
+[![Streamlit Dashboard](https://img.shields.io/badge/Streamlit-Dashboard-red)](https://causal-ml-hte-priyrajsinh.streamlit.app)
 [![CI](https://github.com/Priyrajsinh/causal-ml-hte/actions/workflows/ci.yml/badge.svg)](https://github.com/Priyrajsinh/causal-ml-hte/actions/workflows/ci.yml)
 
 ---
@@ -111,7 +111,7 @@ Targeting based on individual predictions **nearly doubles** the total earnings 
 | | |
 |-|-|
 | **[🤗 Live CATE Predictor](https://huggingface.co/spaces/Priyrajsinh/causal-ml-hte-cate-explorer)** | Enter a profile — age, education, prior earnings, demographics — and get a personalised treatment effect prediction with a 95% confidence interval and a plain-English TREAT / DEFER recommendation. Powered by the trained CausalForestDML. |
-| **[📊 Analysis Dashboard](https://priyrajsinh-causal-ml-hte.streamlit.app)** | Four-tab Streamlit dashboard: the OLS-bias story (Tab 1) · interactive CATE predictor embedded (Tab 2) · heterogeneity breakdown (Tab 3) · policy targeting curve (Tab 4). |
+| **[📊 Analysis Dashboard](https://causal-ml-hte-priyrajsinh.streamlit.app)** | Four-tab Streamlit dashboard: the OLS-bias story (Tab 1) · interactive CATE predictor embedded (Tab 2) · heterogeneity breakdown (Tab 3) · policy targeting curve (Tab 4). |
 
 ---
 
