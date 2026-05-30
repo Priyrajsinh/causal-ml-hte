@@ -295,7 +295,38 @@ with tab2:
     )
 
 with tab3:
-    st.subheader("Tab 3 — Heterogeneity coming soon.")
+    st.subheader("Who benefits more from job training?")
+    _c1, _c2, _c3 = st.columns(3)
+    with _c1:
+        st.image(str(Path("reports/figures/heterogeneity_education.png")))
+    with _c2:
+        st.image(str(Path("reports/figures/heterogeneity_age.png")))
+    with _c3:
+        st.image(str(Path("reports/figures/heterogeneity_re74.png")))
+
+    st.markdown("---")
+    st.subheader("Continuous patterns (rolling mean overlay)")
+    _c1b, _c2b, _c3b = st.columns(3)
+    with _c1b:
+        st.image(str(Path("reports/figures/heterogeneity_education_scatter.png")))
+    with _c2b:
+        st.image(str(Path("reports/figures/heterogeneity_age_scatter.png")))
+    with _c3b:
+        st.image(str(Path("reports/figures/heterogeneity_re74_scatter.png")))
+
+    st.markdown("---")
+    st.subheader("Moderator-score ranking (CATE range per covariate)")
+    _scores = pd.read_csv("reports/figures/moderator_scores.csv")
+    st.dataframe(
+        _scores.style.format(
+            {
+                "cate_range": "${:,.0f}",
+                "cate_min": "${:,.0f}",
+                "cate_max": "${:,.0f}",
+            }
+        ),
+        use_container_width=True,
+    )
 
 with tab4:
     st.subheader("Tab 4 — Policy Targeting coming soon.")
