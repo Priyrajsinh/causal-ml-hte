@@ -1,7 +1,9 @@
-"""Tests for the top-level Streamlit dashboard (app.py, Day 7).
+"""Tests for the top-level Streamlit dashboard (app.py).
 
-Non-slow tests: test_glass_css_exists only (runs in every CI pass).
-Slow tests: AppTest-based, require the fitted causal forest model.
+Non-slow: test_glass_css_exists — runs in every CI pass, no model needed.
+Slow: AppTest-based — skipped in CI (addopts = '-m not slow') but runnable
+      locally.  No model files required since load_artifacts() only reads
+      the committed results.json.
 """
 
 from __future__ import annotations
@@ -10,7 +12,6 @@ from pathlib import Path
 
 import pytest
 
-_MODEL_PATH = Path("models/causal_forest/causal_forest.joblib")
 _APP_PATH = "app.py"
 
 
@@ -24,11 +25,9 @@ def test_glass_css_exists() -> None:
 @pytest.mark.filterwarnings("ignore::UserWarning")
 def test_app_module_imports() -> None:
     """app.py loads in an AppTest context without raising an exception."""
-    if not _MODEL_PATH.exists():
-        pytest.skip("causal_forest.joblib not materialised")
     from streamlit.testing.v1 import AppTest
 
-    at = AppTest.from_file(_APP_PATH, default_timeout=120)
+    at = AppTest.from_file(_APP_PATH, default_timeout=60)
     at.run()
     assert not at.exception, str(at.exception)
 
@@ -38,11 +37,9 @@ def test_app_module_imports() -> None:
 @pytest.mark.filterwarnings("ignore::UserWarning")
 def test_hero_renders() -> None:
     """Hero section contains the 'Causal ML' heading."""
-    if not _MODEL_PATH.exists():
-        pytest.skip("causal_forest.joblib not materialised")
     from streamlit.testing.v1 import AppTest
 
-    at = AppTest.from_file(_APP_PATH, default_timeout=120)
+    at = AppTest.from_file(_APP_PATH, default_timeout=60)
     at.run()
     assert not at.exception, str(at.exception)
     all_md = " ".join(md.value for md in at.markdown)
@@ -53,12 +50,10 @@ def test_hero_renders() -> None:
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 @pytest.mark.filterwarnings("ignore::UserWarning")
 def test_four_tabs_present() -> None:
-    """All four tab sections are rendered (one subheader per tab)."""
-    if not _MODEL_PATH.exists():
-        pytest.skip("causal_forest.joblib not materialised")
+    """All four tab sections render a subheader."""
     from streamlit.testing.v1 import AppTest
 
-    at = AppTest.from_file(_APP_PATH, default_timeout=120)
+    at = AppTest.from_file(_APP_PATH, default_timeout=60)
     at.run()
     assert not at.exception, str(at.exception)
     headings = [s.value for s in at.subheader]
@@ -80,15 +75,13 @@ def test_four_tabs_present() -> None:
 @pytest.mark.slow
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 @pytest.mark.filterwarnings("ignore::UserWarning")
-def test_predict_button_in_tab2() -> None:
-    """Clicking 'Predict CATE' completes without raising an exception."""
-    if not _MODEL_PATH.exists():
-        pytest.skip("causal_forest.joblib not materialised")
+def test_tab2_iframe_renders() -> None:
+    """Tab 2 renders the HF Space iframe without exception."""
     from streamlit.testing.v1 import AppTest
 
-    at = AppTest.from_file(_APP_PATH, default_timeout=300)
+    at = AppTest.from_file(_APP_PATH, default_timeout=60)
     at.run()
     assert not at.exception, str(at.exception)
-    at.button[0].click()
-    at.run()
-    assert not at.exception, str(at.exception)
+    # Tab 2 subheader confirms the section rendered
+    headings = [s.value for s in at.subheader]
+    assert any("custom profile" in h.lower() for h in headings)
