@@ -49,7 +49,7 @@ distlib==0.4.0
 distro==1.9.0
 docker==7.1.0
 dpath==2.2.0
-dulwich==1.2.1
+dulwich==1.2.4
 dvc==3.67.1
 dvc-data==3.18.3
 dvc-http==2.32.0
