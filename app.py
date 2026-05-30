@@ -329,4 +329,37 @@ with tab3:
     )
 
 with tab4:
-    st.subheader("Tab 4 — Policy Targeting coming soon.")
+    st.subheader("Top-30% targeting by predicted CATE")
+    _policy = results["policy_targeting"]
+    _p1, _p2, _p3, _p4 = st.columns(4)
+    _p1.metric(
+        "Targeted (n)",
+        f"{_policy['n_targeted']} / {_policy['n_total']}",
+    )
+    _p2.metric("Avg CATE — targeted", f"${_policy['mean_cate_targeted']:,.0f}")
+    _p3.metric(
+        "Avg CATE — untargeted",
+        f"${_policy['mean_cate_untargeted']:,.0f}",
+    )
+    _p4.metric(
+        "Total realised lift (USD)",
+        f"${_policy['estimated_total_lift_usd']:,.0f}",
+    )
+
+    st.image(str(Path("reports/figures/policy_curve.png")))
+    st.markdown(
+        """
+> The **policy curve** shows how much total earnings lift is captured if we
+> treat the top-K% of applicants ranked by predicted CATE. The targeted
+> curve climbing above the random baseline is empirical evidence that CATE
+> predictions carry signal — targeting based on the model is materially
+> better than first-come-first-served.
+"""
+    )
+    st.image(str(Path("reports/figures/policy_top30_profile.png")))
+    st.markdown(
+        "**Who would be targeted?** The bar chart above shows how the average "
+        "covariate values of the targeted group differ from the population mean. "
+        "Positive bars = the targeted group scores higher than average on that "
+        "covariate."
+    )
