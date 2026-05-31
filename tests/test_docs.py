@@ -50,3 +50,10 @@ def test_model_card_has_no_TBD():
 def test_research_notes_has_5_md_files():
     """research-notes/ must contain the 5 numbered reading-log entries."""
     assert len(list((ROOT / "research-notes").glob("0?-*.md"))) == 5
+
+
+def test_license_exists():
+    """An MIT LICENSE file must be present at the repository root."""
+    license_path = ROOT / "LICENSE"
+    assert license_path.exists()
+    assert "MIT License" in _read("LICENSE")
