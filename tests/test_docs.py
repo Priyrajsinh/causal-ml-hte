@@ -45,3 +45,8 @@ def test_readme_has_eu_ai_act_section():
 def test_model_card_has_no_TBD():
     """MODEL_CARD must be fully filled — no leftover TBD placeholders."""
     assert "TBD" not in _read("MODEL_CARD.md")
+
+
+def test_research_notes_has_5_md_files():
+    """research-notes/ must contain the 5 numbered reading-log entries."""
+    assert len(list((ROOT / "research-notes").glob("0?-*.md"))) == 5
