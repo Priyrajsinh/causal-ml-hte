@@ -40,3 +40,8 @@ def test_readme_has_eu_ai_act_section():
     assert "Annex III" in readme
     articles = ["Article 9", "Article 10", "Article 13", "Article 14"]
     assert sum(a in readme for a in articles) >= 3
+
+
+def test_model_card_has_no_TBD():
+    """MODEL_CARD must be fully filled — no leftover TBD placeholders."""
+    assert "TBD" not in _read("MODEL_CARD.md")
